@@ -8,122 +8,7 @@
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
 
-	<style>
-		.row {
-			margin: 0;
-		}
-
-		.contain {
-			width: 100%;
-		}
-
-		.contain-padding {
-			padding: 0 10%;
-		}
-
-		.videoContainer {
-			background: black;
-			height: 230px;
-			width: 100%;
-		}
-
-		.controls-tab {
-			width: 80%;
-    		margin-top: -56px;
-    		z-index: 20;
-    		padding-top: 10px;
-    		padding-bottom: 8px;
-			position: absolute;
-			background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(3,3,3,0.7343312324929971) 39%, rgba(4,4,4,0.3785889355742297) 66%, rgba(4,4,4,0.12368697478991597) 89%, rgba(0,212,255,0) 100%);			
-			}
-
-		.control-padding {
-			padding: 0 10px;
-			
-		}
-
-		.controls-panel {
-			width: 100%;
-			margin-top: 10px;
-
-		}
-
-		.control-btn {
-			height: 20px;
-			width: 20px;
-			margin: 0 10px;
-			object-fit: contain;
-		}
-
-		.controls-timer {
-			margin: 0 10px;
-			color: white;
-			font-weight: 200;
-		}
-
-		.enlarge-btn {
-			text-align: right;
-		}
-
-		#myProgress {
-			width: 100%;
-			background-color: #ddd;
-			border-radius: 5px;
-		}
-
-		.align-btn {
-			padding: 0 5px;
-			display: table-cell;
-			vertical-align: middle
-		}
-
-		#myProgressBar {
-			width: 30%;
-			height: 3.5px;
-			background-color: #4caf50;
-			border-radius: 5px;
-		}
-
-		#myBar {
-			width: 30%;
-			background-color: #686868;
-			border-radius: 5px;
-		}
-
-		#myDot {
-			float: right;
-			width: 10px;
-			height: 10px;
-			margin-top: -2px;
-			margin-right: -2px;
-			background-color: #4caf50;
-			border-radius: 100%;
-		}
-
-
-
-
-		@media only screen and (min-width: 600px) {
-
-			.contain {
-				width: 100%;
-				margin-bottom: 10%
-			}
-
-			.videoContainer {
-				background: black;
-				height: 500px;
-				width: 100%;
-			}
-
-			.videoAdjust {
-				background: black;
-				height: 500px;
-				width: 100%;
-			}
-
-		}
-	</style>
+	<link rel="stylesheet" type="text/css" href="stylesheets/styles.css">
 </head>
 
 <body style="margin:0 !important">
@@ -131,7 +16,7 @@
 		<div class="contain-padding">
 			<div>
 				<div onclick="togglePlayPause()" class="videoContainer" id="videoContainer">
-					<image id="loadingBar" src="loading.gif" style="display:none;" />
+					<image id="loadingBar" src="images/loading.gif" style="display:none;" />
 					<video class="videoAdjust" id="videoplayer" style="width: 100%"></video>
 				</div>
 			</div>
@@ -147,18 +32,20 @@
 					</div>
 					<div class="row controls-panel">
 						<div class="col-10 col-md-8 align-btn ">
-							<img onclick="togglePlayPause()" id="playButton" src="play.png" class="control-btn">
-							<img onclick="backTenSeconds()" src="backseconds.png" class="control-btn">
-							<img onclick="forwardTenSeconds()" src="forward10.png" class="control-btn">
+							<img id="playButton" src="images/play.png" class="control-btn" />
+							<img id="backTenSecondsButton" src="images/backseconds.png" class="control-btn" />
+							<img id="forwardTenSecondsButton" src="images/forward10.png" class="control-btn" />
+							<img id="muteButton" src="images/volume-up-indicator.png" class="control-btn" />
 							<label class="controls-timer">
 								<span id="showProgress"></span> / <span id="showDuration"></span>
 							</label>
+							<img >
 						</div>
-						<div onclick="showFullScreen()" id="fullScreenButton" class="col-2 col-md-4 align-btn enlarge-btn">
-							<img src="fullscreen.png" class="control-btn">
+						<div id="fullScreenButton" class="col-2 col-md-4 align-btn enlarge-btn">
+							<img src="images/fullscreen.png" class="control-btn">
 						</div>
-						<div onclick="exitFullScreen()" id="exitFullScreenButton" class="col-2 col-md-4 align-btn enlarge-btn" style="display: none">
-							<img src="exit-fullscreen.png" class="control-btn">
+						<div id="exitFullScreenButton" class="col-2 col-md-4 align-btn enlarge-btn" style="display: none">
+							<img src="images/exit-fullscreen.png" class="control-btn">
 						</div>
 					</div>
 				</div>
