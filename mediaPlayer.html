@@ -110,7 +110,7 @@
 	</style>
 </head>
 <body style="margin:0 !important">
-	<div id="contain" class="contain">
+	<div id="contain" class="contain" tabindex="0">
 		<div class="contain-padding">
 			<div>
 				<div onclick="togglePlayPause()" class="videoContainer" id="videoContainer">
@@ -118,7 +118,7 @@
 					<video id="videoplayer" style="width: 100%"></video>
 				</div>
 			</div>
-			<div class="controls-tab">
+			<div class="controls-tab" id="controlsTab">
 				<div class="control-padding"> 
 					<!-- progressbar -->
 					<div id="myProgress">
@@ -137,139 +137,18 @@
 								<span id="showProgress"></span> / <span id="showDuration"></span>
 							</label>
 						</div>
-
-						<div onclick="showFullScreen()" class="col-2 col-md-4 align-btn enlarge-btn">
+						<div onclick="showFullScreen()" id="fullScreenButton" class="col-2 col-md-4 align-btn enlarge-btn">
 							<img src="fullscreen.png" class="control-btn">
+						</div>
+						<div onclick="exitFullScreen()" id="exitFullScreenButton" class="col-2 col-md-4 align-btn enlarge-btn" style="display: none">
+							<img src="exit-fullscreen.png" class="control-btn">
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-
-		<!-- <button style="width: 60px" onclick="togglePlayPause()" id="playButton">Play</button>
-		<button onclick="backTenSeconds()" id="backTenSecondsButton"> <- 10</button>
-		<button onclick="forwardTenSeconds()" id="forwardTenSecondsButton"> 10 -> </button>
-		<button style="width: 65px" onclick="toggleMute()" id="muteButton">Mute</button>
-		<label>Progress <span id="showProgress"></span></label> -->
-		<!-- <label id="showDuration"></label> -->
-<!-- 	<div id="loadingBar" style="visibility:hidden">
-		<image src="loading.gif" style="height:30px;width:30px" />
-	</div>
--->
-<script>
-var videoTag = document.getElementById("videoplayer");
-var loadingBar = document.getElementById("loadingBar");
-console.log(videoTag)
-videoTag.src="/Users/Mohit/Ankit/git/aacharyam_repos/thinkapart_aacharyam/videos/lecture.mp4";
-isVideoPlaying = false;
-isVideoMuted = false;
-progressPercent = 0;
-document.getElementById("showProgress").innerText = progressPercent;
-		// videoTag.src="http://techslides.com/demos/sample-videos/small.mp4"
-
-		function toggleMute() {
-			if (isVideoMuted) {
-				isVideoMuted = false;
-				changeVolume(1)
-				document.getElementById("muteButton").innerText = "Mute";
-			} else {
-				isVideoMuted = true;
-				changeVolume(0)
-				document.getElementById("muteButton").innerText = "unmute";
-			}
-		}
-
-		function playVideo () {
-			isVideoPlaying = true;
-			videoTag.play()
-			document.getElementById("playButton").src = "pause-symbol.png"
-		}
-
-		function pauseVideo () {
-			isVideoPlaying = false;
-			videoTag.pause()
-			document.getElementById("playButton").src = "play.png"
-		}
-
-		function forwardTenSeconds () {
-			this.videoTag.currentTime += 10;
-		}
-
-		function backTenSeconds () {
-			this.videoTag.currentTime -= 10;
-		}
-
-		function onDurationChange(event) {
-			var mins = videoTag.duration / 60;
-			var seconds = videoTag.duration % 60;
-			document.getElementById("showDuration").innerText = parseInt(mins) + ":" + parseInt(seconds);
-		}
-
-		function getFormattedTime(totalTime) {
-			return {mins: videoTag.duration / 60, seconds:videoTag.duration % 60 }
-		}
-
-		function onTimeUpdate (event) {
-			// document.getElementById("showProgress").innerText = videoTag.currentTime;
-			var mins = videoTag.currentTime / 60;
-			var seconds = videoTag.currentTime % 60;
-			progressPercent = (videoTag.currentTime * 100) / videoTag.duration;
-			document.getElementById("showProgress").innerText = parseInt(mins) + ":" + parseInt(seconds);
-		}
-
-		function onSeeking (event) {
-			loadingBar.setAttribute("style", "display: block");
-			if (isVideoPlaying) {
-				togglePlayPause();
-			}
-		}
-
-		function onSeeked (event) {
-			loadingBar.setAttribute("style", "display: none");
-			if (!isVideoPlaying) {
-				togglePlayPause();
-			}
-		}
-
-		function showFullScreen() {
-			var videoContainer = document.getElementById("contain");
-			if (videoContainer.requestFullscreen) {
-				videoContainer.requestFullscreen();
-			} else if (videoContainer.mozRequestFullScreen) {
-				videoContainer.mozRequestFullScreen();
-			} else if (videoContainer.webkitRequestFullscreen) {
-				videoContainer.webkitRequestFullscreen();
-			} else if (videoContainer.msRequestFullscreen) { 
-				videoContainer.msRequestFullscreen();
-			}
-			var container = document.getElementById("videoTag");
-			container.setAttribute("width", "100%");
-			container.setAttribute("height", "1vh");
-		}
-
-		function closeFullScreen() {
-
-		}
-
-		function togglePlayPause () {
-			if (isVideoPlaying) {
-				pauseVideo();
-			} else {
-				playVideo();
-			}
-		}
-
-		function changeVolume (volume) {
-			videoTag.volume = volume;
-		}
-
-		videoTag.addEventListener("timeupdate", onTimeUpdate);
-		videoTag.addEventListener("seeking", onSeeking);
-		videoTag.addEventListener("seeked", onSeeked);
-		videoTag.addEventListener("durationchange", onDurationChange);
-
-		</script>
-		<body>
-
-			</html>
+	<script src="js/videoplayer.js">
+	</script>
+</body>
+</html>
