@@ -33,7 +33,7 @@ document.getElementById("showProgress").innerText = progressPercent;
 		}
 
 		function hideControls() {
-			document.getElementById("controlsTab").setAttribute("style", "display: none");
+			//document.getElementById("controlsTab").setAttribute("style", "display: none");
 		}
 
 		function pauseVideo () {

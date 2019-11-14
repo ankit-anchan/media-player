@@ -9,26 +9,31 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
 
 	<style>
+		:root {
+			outline: 0
+		}
+
 		.row {
 			margin: 0;
 		}
 
 		.contain {
 			width: 100%;
+			outline: none
 		}
 
 		.contain-padding {
-			padding: 0 10%;
+			padding: 0;
 		}
 
 		.videoContainer {
 			background: black;
-			height: 230px;
+			/* height: 230px; */
 			width: 100%;
 		}
 
 		.controls-tab {
-			width: 80%;
+			width: 100%;
     		margin-top: -56px;
     		z-index: 20;
     		padding-top: 10px;
@@ -109,7 +114,9 @@
 				width: 100%;
 				margin-bottom: 10%
 			}
-
+			.contain-padding {
+				padding: 0;
+			}
 			.videoContainer {
 				background: black;
 				height: 500px;
@@ -122,6 +129,10 @@
 				width: 100%;
 			}
 
+			.fullscreenVideo {
+				height:100vh
+			}
+
 		}
 	</style>
 </head>
@@ -130,9 +141,9 @@
 	<div id="contain" class="contain" tabindex="0">
 		<div class="contain-padding">
 			<div>
-				<div onclick="togglePlayPause()" class="videoContainer" id="videoContainer">
+				<div onclick="togglePlayPause()" class="videoContainer fullscreenVideo" id="videoContainer">
 					<image id="loadingBar" src="loading.gif" style="display:none;" />
-					<video class="videoAdjust" id="videoplayer" style="width: 100%"></video>
+					<video class="videoAdjust fullscreenVideo" id="videoplayer" style="width: 100%"></video>
 				</div>
 			</div>
 			<div class="controls-tab" id="controlsTab">
@@ -146,7 +157,7 @@
 						</div>
 					</div>
 					<div class="row controls-panel">
-						<div class="col-10 col-md-8 align-btn ">
+						<div class="col-xs-9 col-sm-8 align-btn ">
 							<img onclick="togglePlayPause()" id="playButton" src="play.png" class="control-btn">
 							<img onclick="backTenSeconds()" src="backseconds.png" class="control-btn">
 							<img onclick="forwardTenSeconds()" src="forward10.png" class="control-btn">
@@ -154,10 +165,10 @@
 								<span id="showProgress"></span> / <span id="showDuration"></span>
 							</label>
 						</div>
-						<div onclick="showFullScreen()" id="fullScreenButton" class="col-2 col-md-4 align-btn enlarge-btn">
+						<div onclick="showFullScreen()" id="fullScreenButton" class="col-xs-3 col-sm-4 align-btn enlarge-btn">
 							<img src="fullscreen.png" class="control-btn">
 						</div>
-						<div onclick="exitFullScreen()" id="exitFullScreenButton" class="col-2 col-md-4 align-btn enlarge-btn" style="display: none">
+						<div onclick="exitFullScreen()" id="exitFullScreenButton" class="col-xs-3 col-sm-4 align-btn enlarge-btn" style="display: none">
 							<img src="exit-fullscreen.png" class="control-btn">
 						</div>
 					</div>
