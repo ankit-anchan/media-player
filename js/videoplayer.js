@@ -1,176 +1,200 @@
 var videoTag = document.getElementById("videoplayer");
 var loadingBar = document.getElementById("loadingBar");
 console.log(videoTag)
-videoTag.src="lecture.mp4";
+videoTag.src="videos/lecture.mp4";
 isVideoPlaying = false;
 isVideoMuted = false;
 progressPercent = 0;
 isFullScreen = false;
-document.getElementById("showProgress").innerText = progressPercent;
+showingControls = false;
+document.getElementById("showProgress").innerText = "00:00";
 
-		function toggleMute() {
-			if (isVideoMuted) {
-				isVideoMuted = false;
-				changeVolume(1)
-				document.getElementById("muteButton").innerText = "Mute";
-			} else {
-				isVideoMuted = true;
-				changeVolume(0)
-				document.getElementById("muteButton").innerText = "unmute";
-			}
-		}
+bindVideoEvents();
+bindVideoContainerEvents();
+bindVideoControlEvents();
 
-		bindEvents();
+function toggleMute() {
+	if (isVideoMuted === true) {
+		isVideoMuted = false;
+		changeVolume(1)
+		document.getElementById("muteButton").src = "images/volume-up-indicator.png";
+	} else {
+		isVideoMuted = true;
+		changeVolume(0)
+		document.getElementById("muteButton").src = "images/volume-off-indicator.png";
+	}
+}
 
-		function playVideo () {
-			isVideoPlaying = true;
-			videoTag.play();
-			document.getElementById("playButton").src = "pause-symbol.png";
-		}
+function playVideo () {
+	showControls();
+	isVideoPlaying = true;
+	videoTag.play();
+	document.getElementById("playButton").src = "images/pause-symbol.png";
+	hideControls();
+}
 
-		function showControls() {
-			document.getElementById("controlsTab").setAttribute("style", "display: block");
-		}
+function showControls() {
+	showingControls = true;
+	document.getElementById("controlsTab").setAttribute("style", "display: block");
+}
 
-		function hideControls() {
+function hideControls() {
+	setTimeout(() => {
+		if (showingControls === false){ 
+			showingControls = false;
 			//document.getElementById("controlsTab").setAttribute("style", "display: none");
 		}
+	}, 2000);
+}
 
-		function pauseVideo () {
-			isVideoPlaying = false;
-			videoTag.pause();
-			document.getElementById("playButton").src = "play.png"
-		}
+function pauseVideo () {
+	showControls();
+	isVideoPlaying = false;
+	videoTag.pause();
+	document.getElementById("playButton").src = "images/play.png"
+	hideControls();
+}
 
-		function forwardTenSeconds () {
-			this.videoTag.currentTime += 10;
-		}
+function forwardTenSeconds () {
+	videoTag.currentTime += 10;
+}
 
-		function backTenSeconds () {
-			this.videoTag.currentTime -= 10;
-		}
+function backTenSeconds () {
+	videoTag.currentTime -= 10;
+}
 
-		function onDurationChange(event) {
-			var mins = videoTag.duration / 60;
-			var seconds = videoTag.duration % 60;
-			document.getElementById("showDuration").innerText = parseInt(mins) + ":" + parseInt(seconds);
-		}
+function onDurationChange(event) {
+	var duration = getFormattedTime(videoTag.duration)
+	document.getElementById("showDuration").innerText = duration.minutes + ":" + duration.seconds;
+}
 
-		function getFormattedTime(totalTime) {
-			return {mins: videoTag.duration / 60, seconds:videoTag.duration % 60 }
-		}
+function getFormattedTime(totalTime) {
+	let minutes = totalTime / 60;
+	let seconds = totalTime % 60;
+	return {minutes: ("0" + parseInt(minutes)).slice(-2), seconds: ("0" + parseInt(seconds)).slice(-2) }
+}
 
-		function onTimeUpdate (event) {
-			// document.getElementById("showProgress").innerText = videoTag.currentTime;
-			var mins = videoTag.currentTime / 60;
-			var seconds = videoTag.currentTime % 60;
-			progressPercent = (videoTag.currentTime * 100) / videoTag.duration;
-			document.getElementById("showProgress").innerText = parseInt(mins) + ":" + parseInt(seconds);
-		}
+function onTimeUpdate (event) {
+	var mins = videoTag.currentTime / 60;
+	var seconds = videoTag.currentTime % 60;
+	progressPercent = (videoTag.currentTime * 100) / videoTag.duration;
+	document.getElementById("showProgress").innerText = ("0" + parseInt(mins)).slice(-2) + ":" + ("0" + parseInt(seconds)).slice(-2);
+}
 
-		function onSeeking (event) {
-			loadingBar.setAttribute("style", "display: block");
-			if (isVideoPlaying) {
-				togglePlayPause();
-			}
-		}
+function onSeeking (event) {
+	loadingBar.setAttribute("style", "display: block");
+	if (isVideoPlaying) {
+		togglePlayPause();
+	}
+}
 
-		function onSeeked (event) {
-			loadingBar.setAttribute("style", "display: none");
-			if (!isVideoPlaying) {
-				togglePlayPause();
-			}
-		}
+function onSeeked (event) {
+	loadingBar.setAttribute("style", "display: none");
+	if (!isVideoPlaying) {
+		togglePlayPause();
+	}
+}
 
-		function showFullScreen() {
-			var videoContainer = document.getElementById("contain");
-			document.getElementById("fullScreenButton").setAttribute("style", "display: none");
-			document.getElementById("exitFullScreenButton").setAttribute("style", "display: block");
-			if (videoContainer.requestFullscreen) {
-				videoContainer.requestFullscreen();
-			} else if (videoContainer.mozRequestFullScreen) {
-				videoContainer.mozRequestFullScreen();
-			} else if (videoContainer.webkitRequestFullscreen) {
-				videoContainer.webkitRequestFullscreen();
-			} else if (videoContainer.msRequestFullscreen) { 
-				videoContainer.msRequestFullscreen();
-			}
-		}
+function showFullScreen() {
+	var videoContainer = document.getElementById("contain");
+	document.getElementById("fullScreenButton").setAttribute("style", "display: none");
+	document.getElementById("exitFullScreenButton").setAttribute("style", "display: block");
+	if (videoContainer.requestFullscreen) {
+		videoContainer.requestFullscreen();
+	} else if (videoContainer.mozRequestFullScreen) {
+		videoContainer.mozRequestFullScreen();
+	} else if (videoContainer.webkitRequestFullscreen) {
+		videoContainer.webkitRequestFullscreen();
+	} else if (videoContainer.msRequestFullscreen) { 
+		videoContainer.msRequestFullscreen();
+	}
+}
 
-		function exitFullScreen() {
-			if (document.exitFullscreen) {
-			    document.exitFullscreen();
-			  } else if (document.mozCancelFullScreen) { /* Firefox */
-			    document.mozCancelFullScreen();
-			  } else if (document.webkitExitFullscreen) { /* Chrome, Safari and Opera */
-			    document.webkitExitFullscreen();
-			  } else if (document.msExitFullscreen) { /* IE/Edge */
-			    document.msExitFullscreen();
-			  }
-		 	document.getElementById("fullScreenButton").setAttribute("style", "display: block");
-			document.getElementById("exitFullScreenButton").setAttribute("style", "display: none");
-		}
+function exitFullScreen() {
+	if (document.exitFullscreen) {
+	    document.exitFullscreen();
+	  } else if (document.mozCancelFullScreen) { /* Firefox */
+	    document.mozCancelFullScreen();
+	  } else if (document.webkitExitFullscreen) { /* Chrome, Safari and Opera */
+	    document.webkitExitFullscreen();
+	  } else if (document.msExitFullscreen) { /* IE/Edge */
+	    document.msExitFullscreen();
+	  }
+ 	document.getElementById("fullScreenButton").setAttribute("style", "display: block");
+	document.getElementById("exitFullScreenButton").setAttribute("style", "display: none");
+}
 
-		function handleKeyPress(event) {
-			console.log("key pressed");
-			console.log(event);
-			keyPressActions(event);
-		}
+function handleKeyPress(event) {
+	keyPressActions(event);
+}
 
-		function keyPressActions (pressedKeyEvent) {
-			switch (pressedKeyEvent.charCode) {
-				case 32: 
-					console.log("pressed space");
-					togglePlayPause();
-					break;
-			}
-			switch (pressedKeyEvent.keyCode) {
-				case 39:
-					console.log("pressed right arrow");
-					forwardTenSeconds();
-					break;
-				case 37:
-					console.log("pressed left arrow");
-					backTenSeconds();
-					break;
-			}
-		}
+function keyPressActions (pressedKeyEvent) {
+	switch (pressedKeyEvent.charCode) {
+		case 32: 
+			console.log("pressed space");
+			togglePlayPause();
+			return;
+	}
+	switch (pressedKeyEvent.keyCode) {
+		case 39:
+			console.log("pressed right arrow");
+			forwardTenSeconds();
+			break;
+		case 37:
+			console.log("pressed left arrow");
+			backTenSeconds();
+			break;
+	}
+}
 
-		function toggleFullScreen() {
-			if (isFullScreen === true) {
-				isFullScreen = false;
-				exitFullScreen();
-			} else {
-				isFullScreen = true;
-				showFullScreen();
-			}
-		}
+function toggleFullScreen() {
+	if (isFullScreen === true) {
+		isFullScreen = false;
+		exitFullScreen();
+	} else {
+		isFullScreen = true;
+		showFullScreen();
+	}
+}
 
-		function togglePlayPause () {
-			if (isVideoPlaying) {
-				pauseVideo();
-			} else {
-				playVideo();
-			}
-		}
+function togglePlayPause () {
+	if (isVideoPlaying) {
+		pauseVideo();
+	} else {
+		playVideo();
+	}
+}
 
-		function changeVolume (volume) {
-			videoTag.volume = volume;
-		}
+function changeVolume (volume) {
+	videoTag.volume = volume;
+}
 
-		function bindEvents() {
-			console.log("binding events");
-			var videoPlayerContainer = document.getElementById("contain");
-			videoPlayerContainer.addEventListener("mouseenter", showControls);
-			videoPlayerContainer.addEventListener("mouseleave", hideControls);
-			videoPlayerContainer.addEventListener("dblclick", toggleFullScreen);
-			videoPlayerContainer.addEventListener("keypress", handleKeyPress);
-			videoPlayerContainer.addEventListener("keydown", handleKeyPress);
-			videoTag.addEventListener("timeupdate", onTimeUpdate);
-			videoTag.addEventListener("seeking", onSeeking);
-			videoTag.addEventListener("seeked", onSeeked);
-			videoTag.addEventListener("durationchange", onDurationChange);
-		}
+function bindVideoContainerEvents() {
+	var videoPlayerContainer = document.getElementById("contain");
+	var videoContainer = document.getElementById("videoContainer")
+			.addEventListener("dblclick", toggleFullScreen);
+	videoPlayerContainer.addEventListener("mouseenter", showControls);
+	videoPlayerContainer.addEventListener("mouseleave", hideControls);
+	videoPlayerContainer.addEventListener("mouseover", showControls);
+	videoPlayerContainer.addEventListener("keypress", handleKeyPress);
+	videoPlayerContainer.addEventListener("keydown", handleKeyPress);	
+}
+
+function bindVideoEvents() {
+	videoTag.addEventListener("timeupdate", onTimeUpdate);
+	videoTag.addEventListener("seeking", onSeeking);
+	videoTag.addEventListener("seeked", onSeeked);
+	videoTag.addEventListener("durationchange", onDurationChange);
+}
+
+function bindVideoControlEvents() {
+	document.getElementById("fullScreenButton").addEventListener("click", showFullScreen);
+	document.getElementById("exitFullScreenButton").addEventListener("click", exitFullScreen);
+	document.getElementById("playButton").addEventListener("click", togglePlayPause);
+	document.getElementById("backTenSecondsButton").addEventListener("click", backTenSeconds);
+	document.getElementById("forwardTenSecondsButton").addEventListener("click", forwardTenSeconds);
+	document.getElementById("muteButton").addEventListener("click", toggleMute);
+}
 
 
 

@@ -4,179 +4,70 @@
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 	<!-- Latest compiled and minified CSS -->
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
-<!-- Latest compiled and minified JavaScript -->
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
-
-	<style>
-		:root {
-			outline: 0
-		}
-
-		.row {
-			margin: 0;
-		}
-
-		.contain {
-			width: 100%;
-			outline: none
-		}
-
-		.contain-padding {
-			padding: 0;
-		}
-
-		.videoContainer {
-			background: black;
-			/* height: 230px; */
-			width: 100%;
-		}
-
-		.controls-tab {
-			width: 100%;
-    		margin-top: -56px;
-    		z-index: 20;
-    		padding-top: 10px;
-    		padding-bottom: 8px;
-			position: absolute;
-			background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(3,3,3,0.7343312324929971) 39%, rgba(4,4,4,0.3785889355742297) 66%, rgba(4,4,4,0.12368697478991597) 89%, rgba(0,212,255,0) 100%);			
-			}
-
-		.control-padding {
-			padding: 0 10px;
-			
-		}
-
-		.controls-panel {
-			width: 100%;
-			margin-top: 10px;
-
-		}
-
-		.control-btn {
-			height: 20px;
-			width: 20px;
-			margin: 0 10px;
-			object-fit: contain;
-		}
-
-		.controls-timer {
-			margin: 0 10px;
-			color: white;
-			font-weight: 200;
-		}
-
-		.enlarge-btn {
-			text-align: right;
-		}
-
-		#myProgress {
-			width: 100%;
-			background-color: #ddd;
-			border-radius: 5px;
-		}
-
-		.align-btn {
-			padding: 0 5px;
-			display: table-cell;
-			vertical-align: middle
-		}
-
-		#myProgressBar {
-			width: 30%;
-			height: 3.5px;
-			background-color: #4caf50;
-			border-radius: 5px;
-		}
-
-		#myBar {
-			width: 30%;
-			background-color: #686868;
-			border-radius: 5px;
-		}
-
-		#myDot {
-			float: right;
-			width: 10px;
-			height: 10px;
-			margin-top: -2px;
-			margin-right: -2px;
-			background-color: #4caf50;
-			border-radius: 100%;
-		}
-
-
-
-
-		@media only screen and (min-width: 600px) {
-
-			.contain {
-				width: 100%;
-				margin-bottom: 10%
-			}
-			.contain-padding {
-				padding: 0;
-			}
-			.videoContainer {
-				background: black;
-				height: 500px;
-				width: 100%;
-			}
-
-			.videoAdjust {
-				background: black;
-				height: 500px;
-				width: 100%;
-			}
-
-			.fullscreenVideo {
-				height:100vh
-			}
-
-		}
-	</style>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+		integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+		integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
+		crossorigin="anonymous"></script>
+	<link rel="stylesheet" type="text/css" href="stylesheets/styles.css">
 </head>
 
 <body style="margin:0 !important">
-	<div id="contain" class="contain" tabindex="0">
-		<div class="contain-padding">
-			<div>
-				<div onclick="togglePlayPause()" class="videoContainer fullscreenVideo" id="videoContainer">
-					<image id="loadingBar" src="loading.gif" style="display:none;" />
-					<video class="videoAdjust fullscreenVideo" id="videoplayer" style="width: 100%"></video>
+	<div id="contain">
+
+		<div class="contain" tabindex="0">
+			<div class="contain-padding">
+				<div>
+					<div onclick="togglePlayPause()" class="videoContainer fullscreenVideo" id="videoContainer">
+						<div>
+							
+						</div>
+						<image id="loadingBar" src="images/loading.gif" style="display:none;" />
+
+						<video class="videoAdjust fullscreenVideo" id="videoplayer" style="width: 100%"></video>
+					</div>
 				</div>
-			</div>
-			<div class="controls-tab" id="controlsTab">
-				<div class="control-padding"> 
-					<!-- progressbar -->
-					<div id="myProgress">
-						<div id="myBar">
-							<div id="myProgressBar">
-								<div id="myDot"></div>
+				<div class="controls-tab" id="controlsTab">
+					<div class="control-padding">
+						<!-- progressbar -->
+						<div id="myProgress">
+							<div id="myBar">
+								<div id="myProgressBar">
+									<div id="myDot"></div>
+								</div>
 							</div>
 						</div>
-					</div>
-					<div class="row controls-panel">
-						<div class="col-xs-9 col-sm-8 align-btn ">
-							<img onclick="togglePlayPause()" id="playButton" src="play.png" class="control-btn">
-							<img onclick="backTenSeconds()" src="backseconds.png" class="control-btn">
-							<img onclick="forwardTenSeconds()" src="forward10.png" class="control-btn">
-							<label class="controls-timer">
-								<span id="showProgress"></span> / <span id="showDuration"></span>
-							</label>
-						</div>
-						<div onclick="showFullScreen()" id="fullScreenButton" class="col-xs-3 col-sm-4 align-btn enlarge-btn">
-							<img src="fullscreen.png" class="control-btn">
-						</div>
-						<div onclick="exitFullScreen()" id="exitFullScreenButton" class="col-xs-3 col-sm-4 align-btn enlarge-btn" style="display: none">
-							<img src="exit-fullscreen.png" class="control-btn">
+						<div class="row controls-panel">
+							<div class="col-xs-10 col-sm-8 align-btn ">
+								<img id="playButton" src="images/play.png" class="control-btn" />
+								<img id="backTenSecondsButton" src="images/backseconds.png" class="control-btn" />
+								<img id="forwardTenSecondsButton" src="images/forward10.png" class="control-btn" />
+								<img id="muteButton" src="images/volume-up-indicator.png" class="control-btn" />
+								<label class="controls-timer">
+									<span id="showProgress"></span> / <span id="showDuration"></span>
+								</label>
+								<img>
+							</div>
+
+							<div id="fullScreenButton" class="col-xs-2 col-sm-4 align-btn enlarge-btn">
+								<img src="images/fullscreen.png" class="control-btn">
+							</div>
+							<div id="exitFullScreenButton" class="col-xs-2 col-sm-4 align-btn enlarge-btn"
+								style="display: none">
+								<img src="images/exit-fullscreen.png" class="control-btn">
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+		<div style="height: 100vh; background: green">
+
+		</div>
 	</div>
 	<script src="js/videoplayer.js">
 	</script>
 </body>
+
 </html>
