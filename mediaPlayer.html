@@ -12,52 +12,64 @@
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
 	<!-- Latest compiled and minified JavaScript -->
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
-
 	<link rel="stylesheet" type="text/css" href="stylesheets/styles.css">
 </head>
 
 <body style="margin:0 !important">
-	<div id="contain" class="contain" tabindex="0">
-		<div class="contain-padding">
-			<div>
-				<div onclick="togglePlayPause()" class="videoContainer" id="videoContainer">
-					<image id="loadingBar" src="images/loading.gif" style="display:none;" />
-					<video class="videoAdjust" id="videoplayer" style="width: 100%"></video>
+	<div id="contain">
+
+		<div class="contain" tabindex="0">
+			<div class="contain-padding">
+				<div>
+					<div onclick="togglePlayPause()" class="videoContainer fullscreenVideo" id="videoContainer">
+						<div>
+							
+						</div>
+						<image id="loadingBar" src="images/loading.gif" style="display:none;" />
+
+						<video class="videoAdjust fullscreenVideo" id="videoplayer" style="width: 100%"></video>
+					</div>
 				</div>
-			</div>
-			<div class="controls-tab" id="controlsTab">
-				<div class="control-padding"> 
-					<!-- progressbar -->
-					<div id="myProgress">
-						<div id="myBar">
-							<div id="myProgressBar">
-								<div id="myDot"></div>
+				<div class="controls-tab" id="controlsTab">
+					<div class="control-padding">
+						<!-- progressbar -->
+						<div id="myProgress">
+							<div id="myBar">
+								<div id="myProgressBar">
+									<div id="myDot"></div>
+								</div>
 							</div>
 						</div>
-					</div>
-					<div class="row controls-panel">
-						<div class="col-10 col-md-8 align-btn ">
-							<img id="playButton" src="images/play.png" class="control-btn" />
-							<img id="backTenSecondsButton" src="images/backseconds.png" class="control-btn" />
-							<img id="forwardTenSecondsButton" src="images/forward10.png" class="control-btn" />
-							<img id="muteButton" src="images/volume-up-indicator.png" class="control-btn" />
-							<label class="controls-timer">
-								<span id="showProgress"></span> / <span id="showDuration"></span>
-							</label>
-							<img >
-						</div>
-						<div id="fullScreenButton" class="col-2 col-md-4 align-btn enlarge-btn">
-							<img src="images/fullscreen.png" class="control-btn">
-						</div>
-						<div id="exitFullScreenButton" class="col-2 col-md-4 align-btn enlarge-btn" style="display: none">
-							<img src="images/exit-fullscreen.png" class="control-btn">
+						<div class="row controls-panel">
+							<div class="col-xs-10 col-sm-8 align-btn ">
+								<img id="playButton" src="images/play.png" class="control-btn" />
+								<img id="backTenSecondsButton" src="images/backseconds.png" class="control-btn" />
+								<img id="forwardTenSecondsButton" src="images/forward10.png" class="control-btn" />
+								<img id="muteButton" src="images/volume-up-indicator.png" class="control-btn" />
+								<label class="controls-timer">
+									<span id="showProgress"></span> / <span id="showDuration"></span>
+								</label>
+								<img>
+							</div>
+
+							<div id="fullScreenButton" class="col-xs-2 col-sm-4 align-btn enlarge-btn">
+								<img src="images/fullscreen.png" class="control-btn">
+							</div>
+							<div id="exitFullScreenButton" class="col-xs-2 col-sm-4 align-btn enlarge-btn"
+								style="display: none">
+								<img src="images/exit-fullscreen.png" class="control-btn">
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+		<div style="height: 100vh; background: green">
+
+		</div>
 	</div>
 	<script src="js/videoplayer.js">
 	</script>
 </body>
+
 </html>

@@ -147,6 +147,11 @@ function keyPressActions (pressedKeyEvent) {
 	}
 }
 
+function onMouseMove() {
+	showControls();
+	setTimeout(hideControls, 2000);
+}
+
 function handleLoadedBufferedData() {
 	console.log(videoTag.readyState);
 	if (videoTag.readyState === 1) {
@@ -183,6 +188,7 @@ function bindVideoContainerEvents() {
 	var videoPlayerContainer = document.getElementById("contain");
 	var videoContainer = document.getElementById("videoContainer")
 			.addEventListener("dblclick", toggleFullScreen);
+	videoPlayerContainer.addEventListener("mousemove", onMouseMove);
 	videoPlayerContainer.addEventListener("mouseenter", showControls);
 	videoPlayerContainer.addEventListener("mouseleave", hideControls);
 	videoPlayerContainer.addEventListener("mouseover", showControls);
