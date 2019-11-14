@@ -67,14 +67,14 @@
 		}
 
 		#myProgressBar {
-			width: 30%;
+			width: 10%;
 			height: 3.5px;
 			background-color: #4caf50;
 			border-radius: 5px;
 		}
 
 		#myBar {
-			width: 30%;
+			width: 0%;
 			background-color: #686868;
 			border-radius: 5px;
 		}

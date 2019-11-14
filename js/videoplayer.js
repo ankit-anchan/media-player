@@ -1,7 +1,8 @@
 var videoTag = document.getElementById("videoplayer");
 var loadingBar = document.getElementById("loadingBar");
-console.log(videoTag)
-videoTag.src="videos/lecture.mp4";
+// videoTag.src="videos/lecture.mp4";
+// videoTag.src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4";
+videoTag.src = "https://www.radiantmediaplayer.com/media/bbb-360p.mp4";
 isVideoPlaying = false;
 isVideoMuted = false;
 progressPercent = 0;
@@ -34,16 +35,13 @@ function playVideo () {
 }
 
 function showControls() {
-	showingControls = true;
+	clearInterval(hideControls);
 	document.getElementById("controlsTab").setAttribute("style", "display: block");
 }
 
 function hideControls() {
-	setTimeout(() => {
-		if (showingControls === false){ 
-			showingControls = false;
-			document.getElementById("controlsTab").setAttribute("style", "display: none");
-		}
+	setTimeout(() => {	
+		document.getElementById("controlsTab").setAttribute("style", "display: none");
 	}, 2000);
 }
 
@@ -77,8 +75,10 @@ function getFormattedTime(totalTime) {
 function onTimeUpdate (event) {
 	var mins = videoTag.currentTime / 60;
 	var seconds = videoTag.currentTime % 60;
-	progressPercent = (videoTag.currentTime * 100) / videoTag.duration;
+	progressPercent = parseInt((videoTag.currentTime * 100) / videoTag.duration);
+	console.log(progressPercent);
 	document.getElementById("showProgress").innerText = ("0" + parseInt(mins)).slice(-2) + ":" + ("0" + parseInt(seconds)).slice(-2);
+	document.getElementById("myProgressBar").setAttribute("style", `width: ${progressPercent}%`)
 }
 
 function onSeeking (event) {
@@ -147,6 +147,16 @@ function keyPressActions (pressedKeyEvent) {
 	}
 }
 
+function handleLoadedBufferedData() {
+	console.log(videoTag.readyState);
+	if (videoTag.readyState === 1) {
+		let buffered = videoTag.buffered.end(0);	
+		const videoDuration = videoTag.duration;
+		var percent = parseInt((buffered / videoDuration) * 100);
+		document.getElementById("myBar").setAttribute("style", `width: ${percent}%`)
+	}
+}
+
 function toggleFullScreen() {
 	if (isFullScreen === true) {
 		isFullScreen = false;
@@ -185,6 +195,9 @@ function bindVideoEvents() {
 	videoTag.addEventListener("seeking", onSeeking);
 	videoTag.addEventListener("seeked", onSeeked);
 	videoTag.addEventListener("durationchange", onDurationChange);
+	videoTag.addEventListener("loadeddata", () => {
+		videoTag.addEventListener("progress", handleLoadedBufferedData);	
+	});
 }
 
 function bindVideoControlEvents() {
@@ -195,6 +208,5 @@ function bindVideoControlEvents() {
 	document.getElementById("forwardTenSecondsButton").addEventListener("click", forwardTenSeconds);
 	document.getElementById("muteButton").addEventListener("click", toggleMute);
 }
-
 
 
