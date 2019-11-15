@@ -4,8 +4,8 @@ var loadingBar = document.getElementById("loadingBar");
 // videoTag.src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4";
 // videoTag.src = "https://www.radiantmediaplayer.com/media/bbb-360p.mp4";
 videoTag.poster = "videos/ffmpeg_4.jpg";
-loadingBar.style.display = "block";
-loadingBar.src = "images/loading.gif";
+// loadingBar.style.display = "block";
+// loadingBar.src = "images/loading.gif";
 isVideoPlaying = false;
 isVideoMuted = false;
 progressPercent = 0;
@@ -41,11 +41,12 @@ function playVideo () {
 }
 
 function showIconOnCenter(resource) {
-	loadingBar.style.display = "block";
-	loadingBar.src = resource;
+	var centerIcon = document.getElementById("centerIcon");
+	centerIcon.style.display = "block";
+	centerIcon.src = resource;
 	setTimeout(() => {
-		loadingBar.style.display = "none";
-		loadingBar.src = "";
+		centerIcon.style.display = "none";
+		centerIcon.src = "";
 	}, 500);
 }
 
@@ -56,7 +57,7 @@ function showControls() {
 function hideControls() {
 	clearTimeout(hideControlsTimeout);
 	hideControlsTimeout = setTimeout(() => {	
-		document.getElementById("controlsTab").style.display = "none";
+		//document.getElementById("controlsTab").style.display = "none";
 	}, 2000);
 }
 
@@ -212,10 +213,21 @@ function playPauseControls() {
 	}
 }
 
+checkWindowWidth();
+
 function checkWindowWidth() {
-	// if(){
-	// 	setVideoHeight()
-	// }
+	if(window.innerWidth <= 600){
+		setVideoHeight()
+	}
+}
+
+function setVideoHeight() {
+	var videoHeight = document.getElementById("videoContainer").clientHeight;
+	document.getElementById("controlsTab").style.height = videoHeight + "px";
+	document.getElementById("loadingBar").style.height = videoHeight + "px";
+	console.log(videoHeight)
+	console.log(document.getElementById("loadingBar").clientHeight)
+
 }
 
 function setVideoHeight() {

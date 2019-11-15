@@ -19,19 +19,21 @@
 		<div class="contain" tabindex="0">
 			<div class="contain-padding">
 				<div>
+					<div onclick="playPauseControls()" class="videoContainer " id="videoContainer">
 
-					<div onclick="playPauseControls()" class="videoContainer fullscreenVideo" id="videoContainer">
-						<div id="progresscontainer" class="progressContainer" style="position: absolute; ">
-							<img id="loadingBar" src=""
-								style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);" />
+						<div class="progressContainer" style="position: absolute; ">
+							<img id="centerIcon" src=""
+								 style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 50px; height: 50px; display: none" />
+							<progress  id="loadingBar" class="pure-material-progress-circular" style=" position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);" />
+
 						</div>
-						<video class="videoAdjust fullscreenVideo" id="videoplayer" style="width: 100%">
-						</video>
+
+						<video class="videoAdjust " id="videoplayer" style="width: 100%">Your Browser does not support HTML5</video>
 					</div>
 				</div>
 
 				<div class="controls-tab" id="controlsTab">
-					<div class="control-padding">
+					<div class="control-padding controls_mobile_desk">
 						<!-- progressbar -->
 						<div id="myProgress">
 							<div id="myBar">
@@ -42,9 +44,9 @@
 						</div>
 						<div class="row controls-panel">
 							<div class="col-xs-10 col-sm-8 align-btn ">
-								<img id="playButton" src="images/play.png" class="control-btn" />
-								<img id="backTenSecondsButton" src="images/backseconds.png" class="control-btn" />
-								<img id="forwardTenSecondsButton" src="images/forward10.png" class="control-btn" />
+								<img id="playButton" src="images/play.png" class="control-btn hidden-xs" />
+								<img id="backTenSecondsButton" src="images/backseconds.png" class="control-btn hidden-xs" />
+								<img id="forwardTenSecondsButton" src="images/forward10.png" class="control-btn hidden-xs" />
 								<img id="muteButton" src="images/volume-up-indicator.png" class="control-btn" />
 								<label class="controls-timer">
 									<span id="showProgress"></span> / <span id="showDuration"></span>
