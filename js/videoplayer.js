@@ -3,8 +3,6 @@ var manifestUri =
 
 function initApp() {
   shaka.polyfill.installAll();
-    var videoTag = document.getElementById("videoplayer");
-    var loadingBar = document.getElementById("loadingBar");
 
   // Check to see if the browser supports the basic APIs Shaka needs.
   if (shaka.Player.isBrowserSupported()) {
