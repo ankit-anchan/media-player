@@ -16,7 +16,7 @@ document.getElementById("showDuration").innerText = "00:00";
 
 bindVideoEvents();
 bindVideoContainerEvents();
-bindVideoControlEvents();
+// bindVideoControlEvents();
 
 function toggleMute() {
 	if (isVideoMuted === true) {
@@ -212,7 +212,7 @@ function playPauseControls() {
 
 function bindVideoContainerEvents() {
 	var videoPlayerContainer = document.getElementById("contain");
-	var videoContainer = document.getElementById("videoContainer")
+	document.getElementById("videoContainer")
 			.addEventListener("dblclick", toggleFullScreen);
 	videoPlayerContainer.addEventListener("mousemove", onMouseMove);
 	videoPlayerContainer.addEventListener("mouseenter", showControls);
@@ -229,6 +229,7 @@ function bindVideoEvents() {
 	videoTag.addEventListener("canplay", () => {
 		loadingBar.style.display = "none";
 		loadingBar.src = "";
+		bindVideoControlEvents();
 	});
 	videoTag.addEventListener("loadeddata", () => {
 		videoTag.addEventListener("progress", handleLoadedBufferedData);	

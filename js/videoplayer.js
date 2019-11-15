@@ -19,6 +19,14 @@ function initPlayer() {
 	var video = document.getElementById("videoplayer");
   	var player = new shaka.Player(video);
 
+    player.configure({
+        streaming: {
+            bufferingGoal: 30,
+            rebufferingGoal: 15,
+            bufferBehind: 60
+        }
+    });
+
   	window.player = player;
 
   	// Listen for errors
