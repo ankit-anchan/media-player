@@ -1,5 +1,6 @@
 var videoTag = document.getElementById("videoplayer");
 var loadingBar = document.getElementById("loadingBar");
+
 // videoTag.src="videos/lecture.mp4";
 // videoTag.src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4";
 videoTag.src = "https://www.radiantmediaplayer.com/media/bbb-360p.mp4";
@@ -10,6 +11,8 @@ isFullScreen = false;
 hideControlsTimeout = null;
 document.getElementById("showProgress").innerText = "00:00";
 
+
+checkWindowWidth();
 bindVideoEvents();
 bindVideoContainerEvents();
 bindVideoControlEvents();
@@ -41,7 +44,7 @@ function showControls() {
 function hideControls() {
 	clearTimeout(hideControlsTimeout);
 	hideControlsTimeout = setTimeout(() => {	
-		document.getElementById("controlsTab").setAttribute("style", "display: none");
+		//document.getElementById("controlsTab").setAttribute("style", "display: none");
 	}, 2000);
 }
 
@@ -183,6 +186,23 @@ function togglePlayPause () {
 function changeVolume (volume) {
 	videoTag.volume = volume;
 }
+
+
+function checkWindowWidth() {
+	// if(){
+	// 	setVideoHeight()
+	// }
+}
+
+function setVideoHeight() {
+	var videoHeight = document.getElementById("videoplayer").clientHeight;
+	console.log(videoHeight)
+	document.getElementById("controlsTab").style.height = videoHeight + "px";
+	document.getElementById("progresscontainer").style.height = videoHeight + "px";
+	console.log(document.getElementById("progresscontainer").clientHeight)
+}
+
+
 
 function bindVideoContainerEvents() {
 	var videoPlayerContainer = document.getElementById("contain");
