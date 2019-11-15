@@ -7,7 +7,7 @@ isVideoPlaying = false;
 isVideoMuted = false;
 progressPercent = 0;
 isFullScreen = false;
-showingControls = false;
+hideControlsTimeout = null;
 document.getElementById("showProgress").innerText = "00:00";
 
 bindVideoEvents();
@@ -35,12 +35,12 @@ function playVideo () {
 }
 
 function showControls() {
-	clearInterval(hideControls);
 	document.getElementById("controlsTab").setAttribute("style", "display: block");
 }
 
 function hideControls() {
-	setTimeout(() => {	
+	clearTimeout(hideControlsTimeout);
+	hideControlsTimeout = setTimeout(() => {	
 		document.getElementById("controlsTab").setAttribute("style", "display: none");
 	}, 2000);
 }
@@ -76,7 +76,6 @@ function onTimeUpdate (event) {
 	var mins = videoTag.currentTime / 60;
 	var seconds = videoTag.currentTime % 60;
 	progressPercent = parseInt((videoTag.currentTime * 100) / videoTag.duration);
-	console.log(progressPercent);
 	document.getElementById("showProgress").innerText = ("0" + parseInt(mins)).slice(-2) + ":" + ("0" + parseInt(seconds)).slice(-2);
 	document.getElementById("myProgressBar").setAttribute("style", `width: ${progressPercent}%`)
 }
@@ -131,35 +130,36 @@ function handleKeyPress(event) {
 function keyPressActions (pressedKeyEvent) {
 	switch (pressedKeyEvent.charCode) {
 		case 32: 
-			console.log("pressed space");
 			togglePlayPause();
 			return;
 	}
 	switch (pressedKeyEvent.keyCode) {
 		case 39:
-			console.log("pressed right arrow");
 			forwardTenSeconds();
 			break;
 		case 37:
-			console.log("pressed left arrow");
 			backTenSeconds();
 			break;
 	}
 }
 
+function onMouseEnter() {
+	clearTimeout(hideControlsTimeout);
+	showControls();
+}
+
 function onMouseMove() {
 	showControls();
-	setTimeout(hideControls, 2000);
+	hideControls();
 }
 
 function handleLoadedBufferedData() {
-	console.log(videoTag.readyState);
-	if (videoTag.readyState === 1) {
-		let buffered = videoTag.buffered.end(0);	
-		const videoDuration = videoTag.duration;
-		var percent = parseInt((buffered / videoDuration) * 100);
-		document.getElementById("myBar").setAttribute("style", `width: ${percent}%`)
-	}
+	let buffered = videoTag.buffered.end(0);	
+	const videoDuration = videoTag.duration;
+	var percent = parseInt((buffered / videoDuration) * 100);
+	console.log(`percent loaded ${percent}`);
+	document.getElementById("myBar").setAttribute("style", `width: ${percent}%`)
+
 }
 
 function toggleFullScreen() {
@@ -191,7 +191,6 @@ function bindVideoContainerEvents() {
 	videoPlayerContainer.addEventListener("mousemove", onMouseMove);
 	videoPlayerContainer.addEventListener("mouseenter", showControls);
 	videoPlayerContainer.addEventListener("mouseleave", hideControls);
-	videoPlayerContainer.addEventListener("mouseover", showControls);
 	videoPlayerContainer.addEventListener("keypress", handleKeyPress);
 	videoPlayerContainer.addEventListener("keydown", handleKeyPress);	
 }
