@@ -3,7 +3,7 @@
 }
 
 .row {
-	margin: 0;
+		margin: 0;
 }
 
 .contain {
@@ -83,7 +83,7 @@
 }
 
 #myBar {
-	width: 30%;
+	width: 10%;
 	background-color: #686868;
 	border-radius: 5px;
 }

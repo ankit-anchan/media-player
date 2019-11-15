@@ -1,12 +1,13 @@
 var videoTag = document.getElementById("videoplayer");
 var loadingBar = document.getElementById("loadingBar");
-console.log(videoTag)
-videoTag.src="videos/lecture.mp4";
+// videoTag.src="videos/lecture.mp4";
+// videoTag.src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4";
+videoTag.src = "https://www.radiantmediaplayer.com/media/bbb-360p.mp4";
 isVideoPlaying = false;
 isVideoMuted = false;
 progressPercent = 0;
 isFullScreen = false;
-showingControls = false;
+hideControlsTimeout = null;
 document.getElementById("showProgress").innerText = "00:00";
 
 bindVideoEvents();
@@ -34,16 +35,13 @@ function playVideo () {
 }
 
 function showControls() {
-	showingControls = true;
 	document.getElementById("controlsTab").setAttribute("style", "display: block");
 }
 
 function hideControls() {
-	setTimeout(() => {
-		if (showingControls === false){ 
-			showingControls = false;
-			//document.getElementById("controlsTab").setAttribute("style", "display: none");
-		}
+	clearTimeout(hideControlsTimeout);
+	hideControlsTimeout = setTimeout(() => {	
+		document.getElementById("controlsTab").setAttribute("style", "display: none");
 	}, 2000);
 }
 
@@ -77,8 +75,9 @@ function getFormattedTime(totalTime) {
 function onTimeUpdate (event) {
 	var mins = videoTag.currentTime / 60;
 	var seconds = videoTag.currentTime % 60;
-	progressPercent = (videoTag.currentTime * 100) / videoTag.duration;
+	progressPercent = parseInt((videoTag.currentTime * 100) / videoTag.duration);
 	document.getElementById("showProgress").innerText = ("0" + parseInt(mins)).slice(-2) + ":" + ("0" + parseInt(seconds)).slice(-2);
+	document.getElementById("myProgressBar").setAttribute("style", `width: ${progressPercent}%`)
 }
 
 function onSeeking (event) {
@@ -131,20 +130,36 @@ function handleKeyPress(event) {
 function keyPressActions (pressedKeyEvent) {
 	switch (pressedKeyEvent.charCode) {
 		case 32: 
-			console.log("pressed space");
 			togglePlayPause();
 			return;
 	}
 	switch (pressedKeyEvent.keyCode) {
 		case 39:
-			console.log("pressed right arrow");
 			forwardTenSeconds();
 			break;
 		case 37:
-			console.log("pressed left arrow");
 			backTenSeconds();
 			break;
 	}
+}
+
+function onMouseEnter() {
+	clearTimeout(hideControlsTimeout);
+	showControls();
+}
+
+function onMouseMove() {
+	showControls();
+	hideControls();
+}
+
+function handleLoadedBufferedData() {
+	let buffered = videoTag.buffered.end(0);	
+	const videoDuration = videoTag.duration;
+	var percent = parseInt((buffered / videoDuration) * 100);
+	console.log(`percent loaded ${percent}`);
+	document.getElementById("myBar").setAttribute("style", `width: ${percent}%`)
+
 }
 
 function toggleFullScreen() {
@@ -173,9 +188,9 @@ function bindVideoContainerEvents() {
 	var videoPlayerContainer = document.getElementById("contain");
 	var videoContainer = document.getElementById("videoContainer")
 			.addEventListener("dblclick", toggleFullScreen);
+	videoPlayerContainer.addEventListener("mousemove", onMouseMove);
 	videoPlayerContainer.addEventListener("mouseenter", showControls);
 	videoPlayerContainer.addEventListener("mouseleave", hideControls);
-	videoPlayerContainer.addEventListener("mouseover", showControls);
 	videoPlayerContainer.addEventListener("keypress", handleKeyPress);
 	videoPlayerContainer.addEventListener("keydown", handleKeyPress);	
 }
@@ -185,6 +200,9 @@ function bindVideoEvents() {
 	videoTag.addEventListener("seeking", onSeeking);
 	videoTag.addEventListener("seeked", onSeeked);
 	videoTag.addEventListener("durationchange", onDurationChange);
+	videoTag.addEventListener("loadeddata", () => {
+		videoTag.addEventListener("progress", handleLoadedBufferedData);	
+	});
 }
 
 function bindVideoControlEvents() {
@@ -195,6 +213,5 @@ function bindVideoControlEvents() {
 	document.getElementById("forwardTenSecondsButton").addEventListener("click", forwardTenSeconds);
 	document.getElementById("muteButton").addEventListener("click", toggleMute);
 }
-
 
 
