@@ -142,7 +142,7 @@ function handleKeyPress(event) {
 function keyPressActions (pressedKeyEvent) {
 	switch (pressedKeyEvent.charCode) {
 		case 32: 
-			togglePlayPause();
+			playPauseControls();
 			return;
 	}
 	switch (pressedKeyEvent.keyCode) {
