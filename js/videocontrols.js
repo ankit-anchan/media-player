@@ -76,6 +76,8 @@ function backTenSeconds () {
 	videoTag.currentTime -= 10;
 }
 
+
+
 function onDurationChange(event) {
 	var duration = getFormattedTime(videoTag.duration);
 	document.getElementById("showDuration").innerText = duration.minutes + ":" + duration.seconds;
@@ -210,6 +212,21 @@ function playPauseControls() {
 	}
 }
 
+function checkWindowWidth() {
+	// if(){
+	// 	setVideoHeight()
+	// }
+}
+
+function setVideoHeight() {
+	var videoHeight = document.getElementById("videoplayer").clientHeight;
+	console.log(videoHeight)
+	document.getElementById("controlsTab").style.height = videoHeight + "px";
+	document.getElementById("progresscontainer").style.height = videoHeight + "px";
+	console.log(document.getElementById("progresscontainer").clientHeight)
+}
+
+
 function bindVideoContainerEvents() {
 	var videoPlayerContainer = document.getElementById("contain");
 	document.getElementById("videoContainer")
@@ -243,6 +260,14 @@ function bindVideoControlEvents() {
 	document.getElementById("backTenSecondsButton").addEventListener("click", backTenSeconds);
 	document.getElementById("forwardTenSecondsButton").addEventListener("click", forwardTenSeconds);
 	document.getElementById("muteButton").addEventListener("click", toggleMute);
+	document.getElementById("myProgress").addEventListener("click", function(e){
+		var offset = document.getElementById("myProgress").offsetLeft;
+		var left = (e.pageX - offset);
+		var totalWidth = document.getElementById("myProgress").clientWidth;
+		var percentage = (left / totalWidth);
+		var vidTime = videoTag.duration * percentage;
+		videoTag.currentTime = parseInt(vidTime);
+	})
 }
 
 

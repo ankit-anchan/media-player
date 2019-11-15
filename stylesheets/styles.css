@@ -27,13 +27,14 @@
 }
 .controls-tab {
 	width: 100%;
-	margin-top: -56px;
+	margin-top: 0;
+	top:0;
 	z-index: 20;
 	padding-top: 10px;
 	padding-bottom: 8px;
 	position: absolute;
-	background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(3,3,3,0.7343312324929971) 39%, rgba(4,4,4,0.3785889355742297) 66%, rgba(4,4,4,0.12368697478991597) 89%, rgba(0,212,255,0) 100%);			
-	}
+	background: rgba(0, 0, 0, 0.466)
+}
 
 .control-padding {
 	padding: 0 10px;
@@ -67,6 +68,7 @@
 	width: 100%;
 	background-color: #ddd;
 	border-radius: 5px;
+	cursor: pointer;
 }
 
 .align-btn {
@@ -76,14 +78,14 @@
 }
 
 #myProgressBar {
-	width: 30%;
+	width: auto;
 	height: 3.5px;
 	background-color: #4caf50;
 	border-radius: 5px;
 }
 
 #myBar {
-	width: 10%;
+	width: auto;
 	background-color: #686868;
 	border-radius: 5px;
 }
@@ -119,6 +121,17 @@
 		background: #00000060;
 		height: 100%;
 		width: 100%;
+	}
+
+	.controls-tab {
+		width: 100%;
+		margin-top: -53px;
+		z-index: 20;
+		padding-top: 10px;
+		padding-bottom: 8px;
+		top: auto;
+		position: absolute;
+		background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(3,3,3,0.7343312324929971) 39%, rgba(4,4,4,0.3785889355742297) 66%, rgba(4,4,4,0.12368697478991597) 89%, rgba(0,212,255,0) 100%);			
 	}
 
 	.videoAdjust {

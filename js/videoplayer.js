@@ -1,9 +1,10 @@
 var manifestUri =
     'videos/dash.mpd';
 
-
 function initApp() {
   shaka.polyfill.installAll();
+    var videoTag = document.getElementById("videoplayer");
+    var loadingBar = document.getElementById("loadingBar");
 
   // Check to see if the browser supports the basic APIs Shaka needs.
   if (shaka.Player.isBrowserSupported()) {
@@ -16,8 +17,8 @@ function initApp() {
 }
 
 function initPlayer() {
-	var video = document.getElementById("videoplayer");
-  	var player = new shaka.Player(video);
+    var video = document.getElementById("videoplayer");
+    var player = new shaka.Player(video);
 
     player.configure({
         streaming: {
@@ -27,15 +28,15 @@ function initPlayer() {
         }
     });
 
-  	window.player = player;
+    window.player = player;
 
-  	// Listen for errors
-  	player.addEventListener('error', onErrorEvent);
-	player.load(manifestUri).then(function() {
-	    // This runs if the asynchronous load is successful.
-	    console.log('The video has now been loaded!');
-	})
-	.catch(onError);
+    // Listen for errors
+    player.addEventListener('error', onErrorEvent);
+    player.load(manifestUri).then(function () {
+        // This runs if the asynchronous load is successful.
+        console.log('The video has now been loaded!');
+    })
+    .catch(onError);
 }
 
 function onErrorEvent(event) {

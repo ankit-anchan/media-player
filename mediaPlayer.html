@@ -4,7 +4,8 @@
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 	<!-- Latest compiled and minified CSS -->
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+		integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
 	<!-- Latest compiled and minified JavaScript -->
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
 	<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/2.5.5/shaka-player.compiled.debug.externs.js"></script>-->
@@ -18,16 +19,17 @@
 		<div class="contain" tabindex="0">
 			<div class="contain-padding">
 				<div>
-					<div onclick="playPauseControls()" class="videoContainer fullscreenVideo" id="videoContainer">
-						
-						<div class="progressContainer" style="position: absolute; ">
-								<image id="loadingBar" src="" style="display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);" />
-						</div>
 
+					<div onclick="playPauseControls()" class="videoContainer fullscreenVideo" id="videoContainer">
+						<div id="progresscontainer" class="progressContainer" style="position: absolute; ">
+							<img id="loadingBar" src=""
+								style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);" />
+						</div>
 						<video class="videoAdjust fullscreenVideo" id="videoplayer" style="width: 100%">
-							</video>
+						</video>
 					</div>
 				</div>
+
 				<div class="controls-tab" id="controlsTab">
 					<div class="control-padding">
 						<!-- progressbar -->
