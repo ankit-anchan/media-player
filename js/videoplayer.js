@@ -16,10 +16,12 @@ bindVideoControlEvents();
 
 function toggleMute() {
 	if (isVideoMuted === true) {
+		showIconOnCenter("images/volume-up-indicator.png");
 		isVideoMuted = false;
 		changeVolume(1)
 		document.getElementById("muteButton").src = "images/volume-up-indicator.png";
 	} else {
+		showIconOnCenter("images/volume-off-indicator.png");
 		isVideoMuted = true;
 		changeVolume(0)
 		document.getElementById("muteButton").src = "images/volume-off-indicator.png";
@@ -34,14 +36,22 @@ function playVideo () {
 	hideControls();
 }
 
+function showIconOnCenter(resource) {
+	loadingBar.style.display = "block";
+	loadingBar.src = resource;
+	setTimeout(() => {
+		loadingBar.style.display = "none";
+	}, 500);
+}
+
 function showControls() {
-	document.getElementById("controlsTab").setAttribute("style", "display: block");
+	document.getElementById("controlsTab").style.display = "block";
 }
 
 function hideControls() {
 	clearTimeout(hideControlsTimeout);
 	hideControlsTimeout = setTimeout(() => {	
-		document.getElementById("controlsTab").setAttribute("style", "display: none");
+		document.getElementById("controlsTab").style.display = "none";
 	}, 2000);
 }
 
@@ -77,18 +87,20 @@ function onTimeUpdate (event) {
 	var seconds = videoTag.currentTime % 60;
 	progressPercent = parseInt((videoTag.currentTime * 100) / videoTag.duration);
 	document.getElementById("showProgress").innerText = ("0" + parseInt(mins)).slice(-2) + ":" + ("0" + parseInt(seconds)).slice(-2);
-	document.getElementById("myProgressBar").setAttribute("style", `width: ${progressPercent}%`)
+	document.getElementById("myProgressBar").style.width = `${progressPercent}%`;
 }
 
-function onSeeking (event) {
-	loadingBar.setAttribute("style", "display: block");
+function onSeeking () {
+	loadingBar.src = "images/loading.gif";
+	loadingBar.style.display = "block";
 	if (isVideoPlaying) {
 		togglePlayPause();
 	}
 }
 
-function onSeeked (event) {
-	loadingBar.setAttribute("style", "display: none");
+function onSeeked () {
+	loadingBar.src = "images/loading.gif";
+	loadingBar.style.display = "none";
 	if (!isVideoPlaying) {
 		togglePlayPause();
 	}
@@ -96,8 +108,8 @@ function onSeeked (event) {
 
 function showFullScreen() {
 	var videoContainer = document.getElementById("contain");
-	document.getElementById("fullScreenButton").setAttribute("style", "display: none");
-	document.getElementById("exitFullScreenButton").setAttribute("style", "display: block");
+	document.getElementById("fullScreenButton").style.display = "none";
+	document.getElementById("exitFullScreenButton").style.display = "block";
 	if (videoContainer.requestFullscreen) {
 		videoContainer.requestFullscreen();
 	} else if (videoContainer.mozRequestFullScreen) {
@@ -119,8 +131,8 @@ function exitFullScreen() {
 	  } else if (document.msExitFullscreen) { /* IE/Edge */
 	    document.msExitFullscreen();
 	  }
- 	document.getElementById("fullScreenButton").setAttribute("style", "display: block");
-	document.getElementById("exitFullScreenButton").setAttribute("style", "display: none");
+ 	document.getElementById("fullScreenButton").style.display = "block";
+	document.getElementById("exitFullScreenButton").style.display = "none";
 }
 
 function handleKeyPress(event) {
@@ -158,8 +170,7 @@ function handleLoadedBufferedData() {
 	const videoDuration = videoTag.duration;
 	var percent = parseInt((buffered / videoDuration) * 100);
 	console.log(`percent loaded ${percent}`);
-	document.getElementById("myBar").setAttribute("style", `width: ${percent}%`)
-
+	document.getElementById("myBar").style.width = `${percent}%`;
 }
 
 function toggleFullScreen() {
@@ -182,6 +193,16 @@ function togglePlayPause () {
 
 function changeVolume (volume) {
 	videoTag.volume = volume;
+}
+
+function playPauseControls() {
+	if (isVideoPlaying) {
+		showIconOnCenter("images/pause-symbol.png");
+		pauseVideo();
+	} else {
+		showIconOnCenter("images/play.png");
+		playVideo();
+	}
 }
 
 function bindVideoContainerEvents() {
@@ -208,7 +229,7 @@ function bindVideoEvents() {
 function bindVideoControlEvents() {
 	document.getElementById("fullScreenButton").addEventListener("click", showFullScreen);
 	document.getElementById("exitFullScreenButton").addEventListener("click", exitFullScreen);
-	document.getElementById("playButton").addEventListener("click", togglePlayPause);
+	document.getElementById("playButton").addEventListener("click", playPauseControls);
 	document.getElementById("backTenSecondsButton").addEventListener("click", backTenSeconds);
 	document.getElementById("forwardTenSecondsButton").addEventListener("click", forwardTenSeconds);
 	document.getElementById("muteButton").addEventListener("click", toggleMute);
