@@ -56,7 +56,7 @@ function showControls() {
 
 function hideControls() {
 	clearTimeout(hideControlsTimeout);
-	hideControlsTimeout = setTimeout(() => {	
+	hideControlsTimeout = setTimeout(() => {
 		//document.getElementById("controlsTab").style.display = "none";
 	}, 2000);
 }
@@ -163,11 +163,6 @@ function keyPressActions (pressedKeyEvent) {
 	}
 }
 
-function onMouseEnter() {
-	clearTimeout(hideControlsTimeout);
-	showControls();
-}
-
 function onMouseMove() {
 	showControls();
 	hideControls();
@@ -222,15 +217,6 @@ function checkWindowWidth() {
 }
 
 function setVideoHeight() {
-	var videoHeight = document.getElementById("videoContainer").clientHeight;
-	document.getElementById("controlsTab").style.height = videoHeight + "px";
-	document.getElementById("loadingBar").style.height = videoHeight + "px";
-	console.log(videoHeight)
-	console.log(document.getElementById("loadingBar").clientHeight)
-
-}
-
-function setVideoHeight() {
 	var videoHeight = document.getElementById("videoplayer").clientHeight;
 	console.log(videoHeight)
 	document.getElementById("controlsTab").style.height = videoHeight + "px";
@@ -272,10 +258,22 @@ function bindVideoControlEvents() {
 	document.getElementById("backTenSecondsButton").addEventListener("click", backTenSeconds);
 	document.getElementById("forwardTenSecondsButton").addEventListener("click", forwardTenSeconds);
 	document.getElementById("muteButton").addEventListener("click", toggleMute);
+	document.getElementById("myProgress").addEventListener("mouseenter", function () {
+		document.getElementById("myProgress").style.height = "7px";
+		document.getElementById("myBar").style.height = "7px";
+		document.getElementById("myProgressBar").style.height = "7px";
+	});
+	document.getElementById("myProgress").addEventListener("mouseleave", function () {
+		setTimeout(() => {
+			document.getElementById("myProgress").style.height = "4px";
+			document.getElementById("myBar").style.height = "4px";
+			document.getElementById("myProgressBar").style.height = "4px";
+		}, 300);
+	});
 	document.getElementById("myProgress").addEventListener("click", function(e){
 		var offset = document.getElementById("myProgress").offsetLeft;
 		var left = (e.pageX - offset);
-		var totalWidth = document.getElementById("myProgress").clientWidth;
+		var totalWidth = document.getElementById("myProgress").clientWidth - 10;
 		var percentage = (left / totalWidth);
 		var vidTime = videoTag.duration * percentage;
 		videoTag.currentTime = parseInt(vidTime);
