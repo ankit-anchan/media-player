@@ -24,6 +24,12 @@
 	background: #00000060;
 	/* height: 230px; */
 	width: 100%;
+	position: absolute; 
+	opacity: 0;
+	transition: opacity 300ms; 
+}
+.playpauseBtn{
+	background: transparent;
 }
 .controls-tab {
 	width: 100%;
@@ -33,7 +39,9 @@
 	padding-top: 10px;
 	padding-bottom: 8px;
 	position: absolute;
-	background: rgba(0, 0, 0, 0.466)
+	background: rgba(0, 0, 0, 0.466);
+	opacity:0;
+	transition: opacity 300ms; 
 }
 
 .control-padding {
@@ -306,19 +314,28 @@
 
 
 .myIconstyle{
-	opacity: 0;
+	opacity: 1;
 	position: absolute; 
-	top: 50%; 
-	left: 50%; 
-	transform: translate(-50%, -50%); 
-	width: 50px; 
-	height: 50px; 
-	transition: opacity 300ms;
+	/* top: 50%; 
+	left: 50%;  */
+	/* transform: translate(-50%, -50%);  */
+	width: 60px; 
+	height: 60px; 
+	transform: scale(.5);
+	transition: opacity ease-out 100ms;
+}
+
+.myFadeIcon {
+	opacity: 0 !important;
+	width: 90px; 
+	height: 90px; 
+	transform: scale(1);
+	transition: all ease-out 500ms;
 }
 
 .myFadeIn{
 	opacity: 1 !important;
-	transition: opacity 300ms;
+	transition: opacity ease-in 300ms;
 }
 
 .myFadeOut {

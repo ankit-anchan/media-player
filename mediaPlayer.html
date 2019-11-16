@@ -23,11 +23,15 @@
 				<div>
 					<div onclick="playPauseControls()" class="videoContainer " id="videoContainer">
 
-						<div id="progress_container" class="progressContainer" style="position: absolute; ">
-							<img id="centerIcon" src="" class="myIconstyle"  />
+						<div id="centerIcon_container" class="progressContainer playpauseBtn flexbox-center" style="background:transparent">
+								<img id="centerIcon" src="" class="myIconstyle"  />
+						</div>
+
+
+						<div id="progress_container" class="progressContainer" >
+							
 							<progress id="loadingBar" class="pure-material-progress-circular"
 								style=" position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);" />
-
 						</div>
 
 						<video class="videoAdjust " id="videoplayer" style="width: 100%">Your Browser does not support

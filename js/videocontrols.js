@@ -1,5 +1,7 @@
 var videoTag = document.getElementById("videoplayer");
 var loadingBar = document.getElementById("loadingBar");
+var progress_container = document.getElementById("progress_container");
+var centerIcon_container = document.getElementById("centerIcon_container");
 // videoTag.src="videos/lecture.mp4";
 // videoTag.src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4";
 // videoTag.src = "https://www.radiantmediaplayer.com/media/bbb-360p.mp4";
@@ -44,9 +46,13 @@ function playVideo() {
 function showIconOnCenter(resource) {
 	var centerIcon = document.getElementById("centerIcon");
 	centerIcon.src = resource;
-	centerIcon.classList.toggle('myFadeIn');
+	
+	centerIcon_container.classList.toggle('myFadeIn');
+	centerIcon.classList.toggle('myFadeIcon');
 	setTimeout(() => {
-		centerIcon.classList.toggle('myFadeIn');
+		
+		centerIcon.classList.toggle('myFadeIcon');
+		centerIcon_container.classList.toggle('myFadeIn');
 	}, 500);
 
 	// setTimeout(() => {
@@ -58,14 +64,16 @@ function showIconOnCenter(resource) {
 }
 
 function showControls() {
-	document.getElementById("controlsTab").style.display = "block";
+	// document.getElementById("controlsTab").style.display = "block"
+	document.getElementById("controlsTab").classList.add('myFadeIn');
 }
 
 function hideControls() {
 	clearTimeout(hideControlsTimeout);
 	hideControlsTimeout = setTimeout(() => {
-		//document.getElementById("controlsTab").style.display = "none";
-	}, 2000);
+		// document.getElementById("controlsTab").style.display = "none"
+		document.getElementById("controlsTab").classList.remove('myFadeIn');
+	}, 1000);
 }
 
 function pauseVideo() {
@@ -108,6 +116,7 @@ function onTimeUpdate(event) {
 function onSeeking() {
 	loadingBar.src = "images/loading.gif";
 	loadingBar.style.display = "block";
+	progress_container.classList.add('myFadeIn')
 	if (isVideoPlaying) {
 		togglePlayPause();
 	}
@@ -116,6 +125,7 @@ function onSeeking() {
 function onSeeked() {
 	loadingBar.src = "images/loading.gif";
 	loadingBar.style.display = "none";
+	progress_container.classList.remove('myFadeIn')
 	if (!isVideoPlaying) {
 		togglePlayPause();
 	}
@@ -207,10 +217,10 @@ function changeVolume(volume) {
 
 function playPauseControls() {
 	if (isVideoPlaying) {
-		showIconOnCenter("images/pause-symbol.png");
+		showIconOnCenter("images/pause_btn.png");
 		pauseVideo();
 	} else {
-		showIconOnCenter("images/play.png");
+		showIconOnCenter("images/play_btn.png");
 		playVideo();
 	}
 }
