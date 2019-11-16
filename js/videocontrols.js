@@ -93,7 +93,7 @@ function getFormattedTime(totalTime) {
 function onTimeUpdate (event) {
 	var mins = videoTag.currentTime / 60;
 	var seconds = videoTag.currentTime % 60;
-	progressPercent = parseInt((videoTag.currentTime * 100) / videoTag.duration);
+	progressPercent = (videoTag.currentTime * 100) / videoTag.duration;
 	document.getElementById("showProgress").innerText = ("0" + parseInt(mins)).slice(-2) + ":" + ("0" + parseInt(seconds)).slice(-2);
 	document.getElementById("myProgressBar").style.width = `${progressPercent}%`;
 }
