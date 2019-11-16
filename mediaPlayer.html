@@ -18,14 +18,13 @@
 <body style="margin:0 !important">
 	<div id="contain">
 
-		<div class="contain" tabindex="0">
+		<div class="contain " tabindex="0">
 			<div class="contain-padding">
 				<div>
 					<div onclick="playPauseControls()" class="videoContainer " id="videoContainer">
 
-						<div class="progressContainer" style="position: absolute; ">
-							<img id="centerIcon" src=""
-								style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 50px; height: 50px; display: none" />
+						<div id="progress_container" class="progressContainer" style="position: absolute; ">
+							<img id="centerIcon" src="" class="myIconstyle"  />
 							<progress id="loadingBar" class="pure-material-progress-circular"
 								style=" position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);" />
 
@@ -39,14 +38,18 @@
 				<div class="controls-tab" id="controlsTab">
 					<div class="control-padding controls_mobile_desk">
 						<!-- progressbar -->
-						<div id="myProgress">
-							<div id="myProgressBar">
-								<div id="myDot"></div>
-							</div>
-							<div id="myBar">
+						<div class="flexbox-center" style="height: 6px">
+							<div id="myProgress" >
+								<div id="myProgressBar" style="position:absolute;">
+									<div id="myDot"></div>
+								</div>
 
+								<div id="myBar">
+
+								</div>
 							</div>
 						</div>
+
 						<div class="row controls-panel">
 							<div class="col-xs-10 col-sm-8 align-btn ">
 								<img id="playButton" src="images/play.png" class="control-btn hidden-xs" />

@@ -14,6 +14,7 @@ hideControlsTimeout = null;
 document.getElementById("showProgress").innerText = "00:00";
 document.getElementById("showDuration").innerText = "00:00";
 
+checkWindowWidth();
 bindVideoEvents();
 bindVideoContainerEvents();
 // bindVideoControlEvents();
@@ -32,7 +33,7 @@ function toggleMute() {
 	}
 }
 
-function playVideo () {
+function playVideo() {
 	showControls();
 	isVideoPlaying = true;
 	videoTag.play();
@@ -42,12 +43,18 @@ function playVideo () {
 
 function showIconOnCenter(resource) {
 	var centerIcon = document.getElementById("centerIcon");
-	centerIcon.style.display = "block";
 	centerIcon.src = resource;
+	centerIcon.classList.toggle('myFadeIn');
 	setTimeout(() => {
-		centerIcon.style.display = "none";
-		centerIcon.src = "";
+		centerIcon.classList.toggle('myFadeIn');
 	}, 500);
+
+	// setTimeout(() => {
+	// 	 centerIcon.src = "";
+	// }, 600);
+	
+	
+
 }
 
 function showControls() {
@@ -61,7 +68,7 @@ function hideControls() {
 	}, 2000);
 }
 
-function pauseVideo () {
+function pauseVideo() {
 	showControls();
 	isVideoPlaying = false;
 	videoTag.pause();
@@ -69,11 +76,11 @@ function pauseVideo () {
 	hideControls();
 }
 
-function forwardTenSeconds () {
+function forwardTenSeconds() {
 	videoTag.currentTime += 10;
 }
 
-function backTenSeconds () {
+function backTenSeconds() {
 	videoTag.currentTime -= 10;
 }
 
@@ -87,10 +94,10 @@ function onDurationChange(event) {
 function getFormattedTime(totalTime) {
 	let minutes = totalTime / 60;
 	let seconds = totalTime % 60;
-	return {minutes: ("0" + parseInt(minutes)).slice(-2), seconds: ("0" + parseInt(seconds)).slice(-2) }
+	return { minutes: ("0" + parseInt(minutes)).slice(-2), seconds: ("0" + parseInt(seconds)).slice(-2) }
 }
 
-function onTimeUpdate (event) {
+function onTimeUpdate(event) {
 	var mins = videoTag.currentTime / 60;
 	var seconds = videoTag.currentTime % 60;
 	progressPercent = (videoTag.currentTime * 100) / videoTag.duration;
@@ -98,7 +105,7 @@ function onTimeUpdate (event) {
 	document.getElementById("myProgressBar").style.width = `${progressPercent}%`;
 }
 
-function onSeeking () {
+function onSeeking() {
 	loadingBar.src = "images/loading.gif";
 	loadingBar.style.display = "block";
 	if (isVideoPlaying) {
@@ -106,7 +113,7 @@ function onSeeking () {
 	}
 }
 
-function onSeeked () {
+function onSeeked() {
 	loadingBar.src = "images/loading.gif";
 	loadingBar.style.display = "none";
 	if (!isVideoPlaying) {
@@ -124,22 +131,22 @@ function showFullScreen() {
 		videoContainer.mozRequestFullScreen();
 	} else if (videoContainer.webkitRequestFullscreen) {
 		videoContainer.webkitRequestFullscreen();
-	} else if (videoContainer.msRequestFullscreen) { 
+	} else if (videoContainer.msRequestFullscreen) {
 		videoContainer.msRequestFullscreen();
 	}
 }
 
 function exitFullScreen() {
 	if (document.exitFullscreen) {
-	    document.exitFullscreen();
-	  } else if (document.mozCancelFullScreen) { /* Firefox */
-	    document.mozCancelFullScreen();
-	  } else if (document.webkitExitFullscreen) { /* Chrome, Safari and Opera */
-	    document.webkitExitFullscreen();
-	  } else if (document.msExitFullscreen) { /* IE/Edge */
-	    document.msExitFullscreen();
-	  }
- 	document.getElementById("fullScreenButton").style.display = "block";
+		document.exitFullscreen();
+	} else if (document.mozCancelFullScreen) { /* Firefox */
+		document.mozCancelFullScreen();
+	} else if (document.webkitExitFullscreen) { /* Chrome, Safari and Opera */
+		document.webkitExitFullscreen();
+	} else if (document.msExitFullscreen) { /* IE/Edge */
+		document.msExitFullscreen();
+	}
+	document.getElementById("fullScreenButton").style.display = "block";
 	document.getElementById("exitFullScreenButton").style.display = "none";
 }
 
@@ -147,9 +154,9 @@ function handleKeyPress(event) {
 	keyPressActions(event);
 }
 
-function keyPressActions (pressedKeyEvent) {
+function keyPressActions(pressedKeyEvent) {
 	switch (pressedKeyEvent.charCode) {
-		case 32: 
+		case 32:
 			playPauseControls();
 			return;
 	}
@@ -169,7 +176,7 @@ function onMouseMove() {
 }
 
 function handleLoadedBufferedData() {
-	let buffered = videoTag.buffered.end(0);	
+	let buffered = videoTag.buffered.end(0);
 	const videoDuration = videoTag.duration;
 	var percent = parseInt((buffered / videoDuration) * 100);
 	console.log(`percent loaded ${percent}`);
@@ -186,7 +193,7 @@ function toggleFullScreen() {
 	}
 }
 
-function togglePlayPause () {
+function togglePlayPause() {
 	if (isVideoPlaying) {
 		pauseVideo();
 	} else {
@@ -194,7 +201,7 @@ function togglePlayPause () {
 	}
 }
 
-function changeVolume (volume) {
+function changeVolume(volume) {
 	videoTag.volume = volume;
 }
 
@@ -208,11 +215,15 @@ function playPauseControls() {
 	}
 }
 
-checkWindowWidth();
+
+
 
 function checkWindowWidth() {
-	if(window.innerWidth <= 600){
-		setVideoHeight()
+	if (window.innerWidth <= 600) {
+		setTimeout(function(){ 
+			setVideoHeight(); 
+		}, 550);
+		window.addEventListener("resize", setVideoHeight);
 	}
 }
 
@@ -220,20 +231,20 @@ function setVideoHeight() {
 	var videoHeight = document.getElementById("videoplayer").clientHeight;
 	console.log(videoHeight)
 	document.getElementById("controlsTab").style.height = videoHeight + "px";
-	document.getElementById("progresscontainer").style.height = videoHeight + "px";
-	console.log(document.getElementById("progresscontainer").clientHeight)
+	document.getElementById("progress_container").style.height = videoHeight + "px";
+	console.log(document.getElementById("progress_container").clientHeight)
 }
 
 
 function bindVideoContainerEvents() {
 	var videoPlayerContainer = document.getElementById("contain");
 	document.getElementById("videoContainer")
-			.addEventListener("dblclick", toggleFullScreen);
+		.addEventListener("dblclick", toggleFullScreen);
 	videoPlayerContainer.addEventListener("mousemove", onMouseMove);
 	videoPlayerContainer.addEventListener("mouseenter", showControls);
 	videoPlayerContainer.addEventListener("mouseleave", hideControls);
 	videoPlayerContainer.addEventListener("keypress", handleKeyPress);
-	videoPlayerContainer.addEventListener("keydown", handleKeyPress);	
+	videoPlayerContainer.addEventListener("keydown", handleKeyPress);
 }
 
 function bindVideoEvents() {
@@ -247,7 +258,7 @@ function bindVideoEvents() {
 		bindVideoControlEvents();
 	});
 	videoTag.addEventListener("loadeddata", () => {
-		videoTag.addEventListener("progress", handleLoadedBufferedData);	
+		videoTag.addEventListener("progress", handleLoadedBufferedData);
 	});
 }
 
@@ -259,18 +270,20 @@ function bindVideoControlEvents() {
 	document.getElementById("forwardTenSecondsButton").addEventListener("click", forwardTenSeconds);
 	document.getElementById("muteButton").addEventListener("click", toggleMute);
 	document.getElementById("myProgress").addEventListener("mouseenter", function () {
-		document.getElementById("myProgress").style.height = "7px";
-		document.getElementById("myBar").style.height = "7px";
-		document.getElementById("myProgressBar").style.height = "7px";
+		document.getElementById("myProgress").style.height = "6px";
+		document.getElementById("myBar").style.height = "6px";
+		document.getElementById("myProgressBar").style.height = "6px";
+		document.getElementById("myDot").style.display = "block";
 	});
 	document.getElementById("myProgress").addEventListener("mouseleave", function () {
 		setTimeout(() => {
 			document.getElementById("myProgress").style.height = "4px";
 			document.getElementById("myBar").style.height = "4px";
 			document.getElementById("myProgressBar").style.height = "4px";
-		}, 300);
+			document.getElementById("myDot").style.display = "none";
+		}, 100);
 	});
-	document.getElementById("myProgress").addEventListener("click", function(e){
+	document.getElementById("myProgress").addEventListener("click", function (e) {
 		var offset = document.getElementById("myProgress").offsetLeft;
 		var left = (e.pageX - offset);
 		var totalWidth = document.getElementById("myProgress").clientWidth - 10;
