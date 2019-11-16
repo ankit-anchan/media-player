@@ -1,5 +1,5 @@
-var manifestUri =
-    'videos/dash.mpd';
+var manifestUri = 'videos/dash.mpd';
+// var manifestUri = "https://storage.googleapis.com/shaka-demo-assets/angel-one/dash.mpd";
 
 function initApp() {
   shaka.polyfill.installAll();
@@ -32,6 +32,7 @@ function initPlayer() {
     player.addEventListener('error', onErrorEvent);
     player.load(manifestUri).then(function () {
         // This runs if the asynchronous load is successful.
+        video.play();
         console.log('The video has now been loaded!');
     })
     .catch(onError);
